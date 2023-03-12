@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Algorithm2DArrays
 {
@@ -311,4 +312,99 @@ public class Algorithm2DArrays
         return false;
     }
 
+    /** A magic square is a square grid filled with distinct positive integers
+     *  such that each element is a different integer, and the sum of the integers
+     *  in each row, column and diagonal is equal.  This method should return true
+     *  if arr is a magic square.
+     *
+     *  PRECONDITION: arr is a square 2D array with the same number of rows and
+     *                columns
+     *
+     *  For example, if arr is:
+     *      7, 2, 3
+     *      0, 4, 8
+     *      5, 6, 1
+     *
+     *  then this method returns true because all numbers are unique (no duplicate
+     *  values) and each row, column, and diagonal add up to the same number (12)
+     *
+     *  As another example, if arr is (note the 3 and 2 swapped):
+     *      7, 3, 2
+     *      0, 4, 8
+     *      5, 6, 1
+     *
+     *  then this method returns false because the column sums no longer add up to
+     *  the same value
+     *
+     *  As another example, if arr is:
+     *      3, 3, 3
+     *      3, 3, 3
+     *      3, 3, 3
+     *  then this method returns false because although the sums are the same
+     *  along rows, columns, and diagonals, there are duplicate numbers.
+     *
+     *  @param arr  2D array of ints
+     */
+    public static boolean magicSquare(int[][] arr) {
+        ArrayList<Integer> oneTo9 = new ArrayList<>();
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[0].length; j++) {
+                oneTo9.add(arr[i][j]);
+            }
+        }
+
+        while (oneTo9.size() > 1) {
+            int removed = oneTo9.remove(0);
+            for (int i = 0; i < oneTo9.size(); i++) {
+                if (oneTo9.get(i) == removed) {
+                    return false;
+                }
+            }
+        }
+
+        int sum = 0;
+        for (int i = 0; i < arr[0].length; i++) {
+            sum += arr[0][i];
+        }
+
+        int rowSum = 0;
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[0].length; j++) {
+                rowSum += arr[i][j];
+            }
+            if (rowSum != sum) {
+                return false;
+            }
+            rowSum = 0;
+        }
+
+        int colSum = 0;
+        for (int i = 0; i < arr[0].length; i++) {
+            for (int j = 0; j < arr.length; j++) {
+                colSum += arr[j][i];
+            }
+            if (colSum != sum) {
+                return false;
+            }
+            colSum = 0;
+        }
+
+        int diaSum = 0;
+        for (int i = 0; i < arr[0].length; i++) {
+            diaSum += arr[i][i];
+        }
+        if (diaSum != sum) {
+            return false;
+        }
+
+        diaSum = 0;
+        for (int i = arr[0].length - 1; i >= 0; i--) {
+            diaSum += arr[i][i];
+        }
+        if (diaSum != sum) {
+            return false;
+        }
+
+        return true;
+    }
 }
