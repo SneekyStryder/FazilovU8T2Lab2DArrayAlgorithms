@@ -407,4 +407,12 @@ public class Algorithm2DArrays
 
         return true;
     }
+
+    public static double sumColumn(double[][] m, int columnIndex) {
+        int colSum = 0;
+        for (int i = 0; i < m.length; i++) {
+            colSum += m[i][columnIndex];
+        }
+        return colSum;
+    }
 }
