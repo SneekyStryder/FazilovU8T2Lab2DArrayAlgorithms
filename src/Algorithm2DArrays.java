@@ -214,4 +214,101 @@ public class Algorithm2DArrays
         }
         return sum / numStudents;
     }
+
+    /** Returns a new 2D array that contains all values in the 2D array arr
+     *  in reverse, such that the last value in the last row becomes the first
+     *  value in the first row, and so on.  This method does NOT modify arr, the
+     *  original 2D array object.
+     *
+     *  Example: if arr is {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}}
+     *  then this method returns the following 2D array:
+     *                     {{12, 11, 10, 9}, {8, 7, 6, 5}, {4, 3, 2, 1}}
+     *
+     *  @param arr  2D array of ints
+     */
+    public static int[][] reverse(int[][] arr) {
+        int[][] list = new int[arr.length][arr[0].length];
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[0].length; j++) {
+                list[i][j] = arr[i][j];
+            }
+        }
+
+        ArrayList<Integer> not2D = new ArrayList<>();
+        for (int i = arr.length - 1; i >= 0; i--) {
+            for (int j = arr[0].length - 1; j >= 0; j--) {
+                not2D.add(arr[i][j]);
+            }
+        }
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[0].length; j++) {
+                list[i][j] = not2D.get(0);
+                not2D.remove(0);
+            }
+        }
+        return list;
+    }
+
+    /** Returns true if any two consecutive elements, horizontally or vertically,
+     *  are equal, false otherwise.  You do not need to check for "wrap around"
+     *  consecutiveness, such as if the last element in a row is the same as
+     *  the first:
+     *
+     *  For example, if arr is:
+     *      1, 2, 3, 4
+     *      2, 7, 3, 5
+     *      3, 4, 5, 6
+     *
+     *  then this method returns true because there is a pair of consecutive
+     *  numbers (vertically)
+     *
+     *  As another example, if arr is:
+     *      1, 2, 3, 4
+     *      2, 7, 8, 5
+     *      3, 4, 4, 6
+     *
+     *  then this method returns true because there is a pair of consecutive
+     *  numbers (horizontally)
+     *
+     *  As another example, if arr is:
+     *      1, 2, 3, 8
+     *      2, 7, 8, 5
+     *      3, 2, 5, 3
+     *
+     *  then this method returns false because there are not two consecutive
+     *  numbers, vertically or horizontally, that are equal.
+     *
+     *  NOTE: do not consider "wrap around" consecutiveness, in other words,
+     *  the 3's and 2's below are not considered consecutive:
+     *      1, 2, 3, 8
+     *      2, 7, 8, 5
+     *      3, 2, 5, 3
+     *
+     *  Similarly, equal numbers on a diagonal are not considered consecutive,
+     *  so the 8's below are not consecutive:
+     *      1, 2, 3, 8
+     *      2, 7, 8, 5
+     *      3, 2, 5, 3
+     *
+     *  @param arr  2D array of ints
+     */
+    public static boolean consecutive(int[][] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[0].length - 1; j++) {
+                if (arr[i][j] == arr[i][j + 1]) {
+                    return true;
+                }
+            }
+        }
+
+        for (int i = 0; i < arr[0].length; i++) {
+            for (int j = 0; j < arr.length - 1; j++) {
+                if (arr[j][i] == arr[j + 1][i]) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 }
